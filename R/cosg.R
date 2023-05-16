@@ -147,13 +147,22 @@ cosg<-function(
     
     colnames(rank_stats_names) <- groups_order
     colnames(rank_stats_scores) <- groups_order
-    
-    ###
-    ranks_stats=list(
-        names=rank_stats_names,
-        scores=rank_stats_scores
 
-    )
+    ranks_stats <- data.frame(cluster="1",gene="1",score=1)
+    for(i in 1:ncol(rank_stats_names)){
+        temp <- cbind(colnames(rank_stats_names)[i],rank_stats_names[i],rank_stats_scores[i])
+        colnames(temp) <- c("cluster","gene","score")
+        ranks_stats <- rbind(ranks_stats,temp)
+    }
+    ranks_stats <- ranks_stats[-1,]
+    rownames(ranks_stats) <- c()
+    
+    # ###
+    # ranks_stats=list(
+    #     names=rank_stats_names,
+    #     scores=rank_stats_scores
+    # )
     ### return
     return(ranks_stats)
 }
+
